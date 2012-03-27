@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget>
+  <widgetname>SVG Mazes</widgetname>
+  <description>Educational game for kindergarten children. The goal of this game is to solve randomly generated labyrinths.</description>
+  <width>640</width>
+  <height>480</height>
+  <author>
+    <name>Lukas Laag</name>
+    <email>laaglu@gmail.com</email>
+    <link>http://www.vectomatic.org</link>
+  </author>
+</widget>

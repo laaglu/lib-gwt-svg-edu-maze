@@ -1,0 +1,199 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'
+	xmlns:svgui='urn:import:org.vectomatic.dom.svg.ui'>
+	<ui:with field='resources' type='org.vectomatic.svg.edu.client.maze.MazeBundle' />
+	<ui:with field='common' type='org.vectomatic.svg.edu.client.commons.CommonBundle' />
+	<ui:style>	
+		@external .bgcolor;
+		
+		/* Style for the game navigation arrows */
+		.arrow-up {
+		}
+		.arrow-up-hovering {
+		}
+		.arrow-down-down-hovering {
+		}
+		.arrow-up-disabled {
+		  opacity:0.7
+		}
+		.arrow-up .bgcolor {
+		  fill:white;
+		}
+		.arrow-up-hovering .bgcolor {
+		  fill:cornsilk;
+		}
+		.arrow-down-hovering .bgcolor {
+		  fill:yellow;
+		}
+		.arrow-up-disabled .bgcolor {
+		  fill:white;
+		}
+		
+		/* Style for the other game controls (eraser, help, restart) */
+		.btn-up {
+		}
+		.btn-up-hovering {
+		}
+		.btn-down-down-hovering {
+		}
+		.btn-up-disabled {
+		  opacity:0.7
+		}
+		.btn-up .bgcolor {
+		  fill:white;
+		}
+		.btn-up-hovering .bgcolor {
+		  fill:lavenderblush;
+		}
+		.btn-down-hovering .bgcolor {
+		  fill:lavender;
+		}
+		.btn-up-disabled .bgcolor {
+		  fill:white;
+		}
+		
+		/* Make focus panel invisible*/
+		.focus {
+		  outline:none;
+		}
+		
+		/* CSS positionning rules */
+		.levelList {
+			position:absolute;
+			top:0px;
+			right:4%;
+			height:1.5em;
+		}
+		.controlPanel {
+			position:absolute;
+			top:1.5em;
+			right:0px;
+			width:15%;
+			height:90%;
+			z-index:10;
+		}
+		.row1 {
+			position:absolute;
+			top:0%;
+			right:26%;
+			width:48%;
+			height:16%;
+		}
+		.row2a {
+			position:absolute;
+			top:16%;
+			right:51%;
+			width:48%;
+			height:16%;
+		}
+		.row2b {
+			position:absolute;
+			top:16%;
+			right:1%;
+			width:48%;
+			height:16%;
+		}
+		.row3 {
+			position:absolute;
+			top:32%;
+			right:26%;
+			width:48%;
+			height:16%;
+		}
+		.row4 {
+			position:absolute;
+			top:48%;
+			right:26%;
+			width:48%;
+			height:16%;
+		}
+		.row5 {
+			position:absolute;
+			top:64%;
+			right:26%;
+			width:48%;
+			height:16%;
+		}
+		.row6 {
+			position:absolute;
+			top:80%;
+			right:26%;
+			width:48%;
+			height:16%;
+		}
+		.main {
+			position:absolute;
+			width:100%;
+			height:100%;
+		}
+	</ui:style>
+	<g:FlowPanel styleName="{style.main}">
+	  <g:FocusPanel ui:field="focusPanel" width="85%" height="80%" styleName="{style.focus}"/>
+	  <g:ListBox ui:field='levelList' styleName='{style.levelList}'/>
+
+	  <g:FlowPanel styleName='{style.controlPanel}'>
+	    <svgui:SVGPushButton ui:field='upButton' resource='{resources.up}' repeatDelay="250" classNameBaseVal='{style.row1}'>
+		  <svgui:upFace><svgui:styleChange classNames="{style.arrow-up}"/></svgui:upFace>
+		  <svgui:upDisabledFace><svgui:styleChange classNames="{style.arrow-up-disabled}"/></svgui:upDisabledFace>
+		  <svgui:upHoveringFace><svgui:styleChange classNames="{style.arrow-up-hovering}"/></svgui:upHoveringFace>
+		  <svgui:downHoveringFace><svgui:styleChange classNames="{style.arrow-down-hovering}"/></svgui:downHoveringFace>
+	    </svgui:SVGPushButton>
+
+	    <svgui:SVGPushButton ui:field='leftButton' resource='{resources.left}' repeatDelay="250" classNameBaseVal='{style.row2a}'>
+		  <svgui:upFace><svgui:styleChange classNames="{style.arrow-up}"/></svgui:upFace>
+		  <svgui:upDisabledFace><svgui:styleChange classNames="{style.arrow-up-disabled}"/></svgui:upDisabledFace>
+		  <svgui:upHoveringFace><svgui:styleChange classNames="{style.arrow-up-hovering}"/></svgui:upHoveringFace>
+		  <svgui:downHoveringFace><svgui:styleChange classNames="{style.arrow-down-hovering}"/></svgui:downHoveringFace>
+	    </svgui:SVGPushButton>
+
+	    <svgui:SVGPushButton ui:field='rightButton' resource='{resources.right}' repeatDelay="250" classNameBaseVal='{style.row2b}'>
+		  <svgui:upFace><svgui:styleChange classNames="{style.arrow-up}"/></svgui:upFace>
+		  <svgui:upDisabledFace><svgui:styleChange classNames="{style.arrow-up-disabled}"/></svgui:upDisabledFace>
+		  <svgui:upHoveringFace><svgui:styleChange classNames="{style.arrow-up-hovering}"/></svgui:upHoveringFace>
+		  <svgui:downHoveringFace><svgui:styleChange classNames="{style.arrow-down-hovering}"/></svgui:downHoveringFace>
+	    </svgui:SVGPushButton>
+
+	    <svgui:SVGPushButton ui:field='downButton' resource='{resources.down}' repeatDelay="250" classNameBaseVal='{style.row3}'>
+		  <svgui:upFace><svgui:styleChange classNames="{style.arrow-up}"/></svgui:upFace>
+		  <svgui:upDisabledFace><svgui:styleChange classNames="{style.arrow-up-disabled}"/></svgui:upDisabledFace>
+		  <svgui:upHoveringFace><svgui:styleChange classNames="{style.arrow-up-hovering}"/></svgui:upHoveringFace>
+		  <svgui:downHoveringFace><svgui:styleChange classNames="{style.arrow-down-hovering}"/></svgui:downHoveringFace>
+	    </svgui:SVGPushButton>
+
+	    <svgui:SVGPushButton ui:field='backButton' resource='{resources.back}' repeatDelay="250" classNameBaseVal='{style.row4}'>
+		  <svgui:upFace><svgui:styleChange classNames="{style.btn-up}"/></svgui:upFace>
+		  <svgui:upDisabledFace><svgui:styleChange classNames="{style.btn-up-disabled}"/></svgui:upDisabledFace>
+		  <svgui:upHoveringFace><svgui:styleChange classNames="{style.btn-up-hovering}"/></svgui:upHoveringFace>
+		  <svgui:downHoveringFace><svgui:styleChange classNames="{style.btn-down-hovering}"/></svgui:downHoveringFace>
+	    </svgui:SVGPushButton>
+
+	    <svgui:SVGPushButton ui:field='generateButton' resource='{resources.compute}' classNameBaseVal='{style.row5}'>
+		  <svgui:upFace><svgui:styleChange classNames="{style.btn-up}"/></svgui:upFace>
+		  <svgui:upDisabledFace><svgui:styleChange classNames="{style.btn-up-disabled}"/></svgui:upDisabledFace>
+		  <svgui:upHoveringFace><svgui:styleChange classNames="{style.btn-up-hovering}"/></svgui:upHoveringFace>
+		  <svgui:downHoveringFace><svgui:styleChange classNames="{style.btn-down-hovering}"/></svgui:downHoveringFace>
+	    </svgui:SVGPushButton>
+
+	    <svgui:SVGPushButton ui:field='helpButton' resource='{resources.help}' classNameBaseVal='{style.row6}'>
+		  <svgui:upFace><svgui:styleChange classNames="{style.btn-up}"/></svgui:upFace>
+	 	  <svgui:upDisabledFace><svgui:styleChange classNames="{style.btn-up-disabled}"/></svgui:upDisabledFace>
+		  <svgui:upHoveringFace><svgui:styleChange classNames="{style.btn-up-hovering}"/></svgui:upHoveringFace>
+		  <svgui:downHoveringFace><svgui:styleChange classNames="{style.btn-down-hovering}"/></svgui:downHoveringFace>
+	    </svgui:SVGPushButton>
+	  </g:FlowPanel>
+					  
+	  <g:FlowPanel ui:field="navigationPanel" styleName='{common.css.navigationPanel}'>
+	  
+		<svgui:SVGPushButton ui:field='prevButton' resource='{common.previous}' classNameBaseVal='{common.css.navigationPanelPrevButton}'>
+	      <svgui:upFace><svgui:styleChange classNames="{common.css.navigationUp}"/></svgui:upFace>
+		  <svgui:upHoveringFace><svgui:styleChange classNames="{common.css.navigationUpHovering}"/></svgui:upHoveringFace>
+	    </svgui:SVGPushButton>
+	    
+	    <svgui:SVGPushButton ui:field='nextButton' resource='{common.next}' classNameBaseVal='{common.css.navigationPanelNextButton}'>
+		  <svgui:upFace><svgui:styleChange classNames="{common.css.navigationUp}"/></svgui:upFace>
+		  <svgui:upHoveringFace><svgui:styleChange classNames="{common.css.navigationUpHovering}"/></svgui:upHoveringFace>
+		  </svgui:SVGPushButton>
+		  
+	  </g:FlowPanel>
+	</g:FlowPanel>
+</ui:UiBinder>

@@ -1,0 +1,32 @@
+.blank {
+ fill:white;
+}
+.src {
+ fill:lightblue;
+}
+.dest {
+ fill:red;
+}
+.path {
+ fill:lightgreen;
+}
+.current {
+ fill:yellow;
+}
+.solution {
+ fill:aquamarine;
+}
+.symbol {
+ fill:black;
+ stroke:none;
+}
+.border {
+ stroke-width:1;
+ stroke-linecap:round;
+ stroke-linejoin:round;
+}
+.wall {
+ stroke-width:1;
+ stroke-linecap:round;
+ stroke-linejoin:round;
+}
