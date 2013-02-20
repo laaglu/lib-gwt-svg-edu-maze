@@ -25,6 +25,7 @@ import org.vectomatic.dom.svg.OMSVGPathElement;
 import org.vectomatic.dom.svg.OMSVGRect;
 import org.vectomatic.dom.svg.OMSVGSVGElement;
 import org.vectomatic.dom.svg.OMSVGStyleElement;
+import org.vectomatic.dom.svg.OMText;
 import org.vectomatic.dom.svg.ui.SVGPushButton;
 import org.vectomatic.dom.svg.utils.AsyncXmlLoader;
 import org.vectomatic.dom.svg.utils.AsyncXmlLoaderCallback;
@@ -241,9 +242,9 @@ public class MazeMain implements EntryPoint {
 				root2.setWidth(OMSVGLength.SVG_LENGTHTYPE_CM, 29.7f);
 				root2.setHeight(OMSVGLength.SVG_LENGTHTYPE_CM, 21f);
 			}
-			OMSVGStyleElement styleElement = document.createSVGStyleElement();
+			OMSVGStyleElement styleElement = new OMSVGStyleElement();
 			styleElement.setType(SVGConstants.CSS_TYPE);
-			styleElement.appendChild(document.createTextNode(style.getText()));
+			styleElement.appendChild(new OMText(style.getText()));
 			root2.insertBefore(styleElement, root2.getFirstChild());
 			
 			GWT.log(root2.getMarkup());
@@ -256,7 +257,7 @@ public class MazeMain implements EntryPoint {
 		if (positionTimer != null) {
 			positionTimer.cancel();
 		}
-		OMSVGGElement g = document.createSVGGElement();
+		OMSVGGElement g = new OMSVGGElement();
 		if (cellGroup != null) {
 			svgRoot.replaceChild(g, cellGroup);
 		} else {
@@ -265,7 +266,7 @@ public class MazeMain implements EntryPoint {
 		cellGroup = g;
 
 		String wallStroke = mazeDef.getAttributeNS(RectangularMaze.VECTOMATIC_NS, RectangularMaze.WALL_TAG);
-		OMSVGPathElement p = document.createSVGPathElement();
+		OMSVGPathElement p = new OMSVGPathElement();
 		p.setClassNameBaseVal(style.wall());
 		p.getStyle().setSVGProperty(SVGConstants.CSS_STROKE_PROPERTY, wallStroke);
 		if (wallPath != null) {
@@ -276,7 +277,7 @@ public class MazeMain implements EntryPoint {
 		wallPath = p;
 
 		String borderStroke = mazeDef.getAttributeNS(RectangularMaze.VECTOMATIC_NS, RectangularMaze.BORDER_TAG);
-		p = document.createSVGPathElement();
+		p = new OMSVGPathElement();
 		p.setClassNameBaseVal(style.border());
 		p.getStyle().setSVGProperty(SVGConstants.CSS_STROKE_PROPERTY, borderStroke);
 		if (borderPath != null) {

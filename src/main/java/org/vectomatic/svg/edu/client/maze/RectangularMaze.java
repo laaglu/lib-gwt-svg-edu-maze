@@ -334,7 +334,6 @@ public class RectangularMaze extends Maze {
 		grid[srcX][srcY].setClassName(style.src());
 		grid[destX][destY].setClassName(style.dest());
 		OMSVGRectElement srcRect = grid[srcX][srcY].rect;
-		OMSVGDocument document = (OMSVGDocument) srcRect.getOwnerDocument();
 		OMSVGGElement cellGroup = (OMSVGGElement)srcRect.getParentNode();
 		if (srcCircle == null) {
 			float srcX = srcRect.getX().getBaseVal().getValue();
@@ -345,7 +344,7 @@ public class RectangularMaze extends Maze {
 			srcY += 0.1f * srcH;
 			srcW *= 0.8f;
 			srcH *= 0.8f;
-			srcCircle = document.createSVGCircleElement(srcX + 0.5f * srcW, srcY + 0.5f * srcH, (float)Math.sqrt(0.5f * 0.5f * Math.min(srcW, srcH) * Math.min(srcW, srcH)));
+			srcCircle = new OMSVGCircleElement(srcX + 0.5f * srcW, srcY + 0.5f * srcH, (float)Math.sqrt(0.5f * 0.5f * Math.min(srcW, srcH) * Math.min(srcW, srcH)));
 			srcCircle.setClassNameBaseVal(style.symbol());
 			cellGroup.appendChild(srcCircle);
 		}
@@ -359,7 +358,7 @@ public class RectangularMaze extends Maze {
 			destY += 0.1f * destH;
 			destW *= 0.8f;
 			destH *= 0.8f;
-			destPath = document.createSVGPathElement();
+			destPath = new OMSVGPathElement();
 			OMSVGPathSegList destSegs = destPath.getPathSegList();
 			destSegs.appendItem(destPath.createSVGPathSegMovetoAbs(destX, destY));
 			destSegs.appendItem(destPath.createSVGPathSegLinetoAbs(destX + destW, destY));
