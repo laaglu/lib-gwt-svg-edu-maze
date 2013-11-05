@@ -27,6 +27,12 @@ public interface MazeBundle extends ClientBundle {
 	public static final MazeBundle INSTANCE = GWT.create(MazeBundle.class);
 	@Source("maze.css")
 	public MazeCss getCss();
+	@Source("mazeLayout.css")
+	public MazeLayoutCss mazeLayout();
+	@Source("mazeLayoutLandscape.css")
+	public MazeLayoutCss mazeLayoutLandscape();
+	@Source("mazeLayoutPortrait.css")
+	public MazeLayoutCss mazeLayoutPortrait();
 	@Source("levels.txt")
 	public TextResource levels();
 	@Source("direction_a_suivre_4_yve_01.svg")

@@ -32,7 +32,9 @@ import org.vectomatic.dom.svg.utils.AsyncXmlLoaderCallback;
 import org.vectomatic.dom.svg.utils.SVGConstants;
 import org.vectomatic.svg.edu.client.commons.CommonBundle;
 import org.vectomatic.svg.edu.client.commons.CommonConstants;
+import org.vectomatic.svg.edu.client.commons.DifficultyPicker;
 import org.vectomatic.svg.edu.client.commons.LicenseBox;
+import org.vectomatic.svg.edu.client.commons.Utils;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -41,11 +43,11 @@ import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -54,7 +56,6 @@ import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -71,6 +72,8 @@ public class MazeMain implements EntryPoint {
 	
 	@UiField(provided=true)
 	static MazeBundle resources = MazeBundle.INSTANCE;
+	@UiField(provided=true)
+	static MazeLayoutCss mazeLayoutCss = MazeBundle.INSTANCE.mazeLayout();
 	@UiField(provided=true)
 	static CommonBundle common = CommonBundle.INSTANCE;
 	static MazeCss style = resources.getCss();
@@ -119,7 +122,7 @@ public class MazeMain implements EntryPoint {
 	@UiField
 	SVGPushButton nextButton;
 	@UiField
-	ListBox levelList;
+	DifficultyPicker difficultyPicker;
 	@UiField
 	FlowPanel navigationPanel;
 	Widget menuWidget;
@@ -176,8 +179,15 @@ public class MazeMain implements EntryPoint {
 	 */
 	@Override
 	public void onModuleLoad() {
+		// Inject styles from the common modules, taking into account media queries
 		common.css().ensureInjected();
+		common.mediaQueries().ensureInjected();
+		Utils.injectMediaQuery("(orientation:landscape)", common.mediaQueriesLandscape());
+		Utils.injectMediaQuery("(orientation:portrait)", common.mediaQueriesPortrait());
+		Utils.injectMediaQuery("(orientation:landscape)", resources.mazeLayoutLandscape());
+		Utils.injectMediaQuery("(orientation:portrait)", resources.mazeLayoutPortrait());
 		style.ensureInjected();
+		mazeLayoutCss.ensureInjected();
 		
 		if (solutionTimer != null) {
 			solutionTimer.cancel();
@@ -193,22 +203,16 @@ public class MazeMain implements EntryPoint {
 			menuWidget = LicenseBox.createAboutButton();
 		}
 		navigationPanel.insert(menuWidget, 0);
-		levelList.addItem(MazeConstants.INSTANCE.easy());
-		levelList.addItem(MazeConstants.INSTANCE.medium());
-		levelList.addItem(MazeConstants.INSTANCE.hard());
 	
 		int difficulty = 0;
 		String difficultyParam = Window.Location.getParameter("difficulty");
 		if (difficultyParam != null) {
-			if (MazeConstants.INSTANCE.easy().equals(difficultyParam)) {
-				difficulty = 0;
-			} else if (MazeConstants.INSTANCE.medium().equals(difficultyParam)) {
-				difficulty = 1;
-			} else if (MazeConstants.INSTANCE.hard().equals(difficultyParam)) {
-				difficulty = 2;				
+			try {
+				difficulty = Integer.parseInt(difficultyParam);	
+			} catch(NumberFormatException e) {
 			}
 		}
-		levelList.setSelectedIndex(difficulty);
+		difficultyPicker.setDifficulty(difficulty);
 		RootPanel.get(CommonConstants.ID_UIROOT).add(panel);
 		
 		String levelParam = Window.Location.getParameter("level");
@@ -287,7 +291,7 @@ public class MazeMain implements EntryPoint {
 		}
 		borderPath = p;
 
-		String[] res = mazeDef.getAttributeNS(RectangularMaze.VECTOMATIC_NS, RectangularMaze.RES_TAG + (levelList.getSelectedIndex() + 1)).split("x");
+		String[] res = mazeDef.getAttributeNS(RectangularMaze.VECTOMATIC_NS, RectangularMaze.RES_TAG + (difficultyPicker.getDifficulty() + 1)).split("x");
 		int colCount = Integer.parseInt(res[0]);
 		int rowCount = Integer.parseInt(res[1]);
 		maze = RectangularMaze.createMaze(colCount, rowCount, document, mazeDef, cellGroup, borderPath, wallPath);
@@ -330,7 +334,7 @@ public class MazeMain implements EntryPoint {
 	}
 	private void update() {
 		frozen = false;
-		levelList.setEnabled(true);
+		difficultyPicker.setEnabled(true);
 		leftButton.setEnabled(maze.canGoLeft());
 		rightButton.setEnabled(maze.canGoRight());
 		upButton.setEnabled(maze.canGoUp());
@@ -423,7 +427,7 @@ public class MazeMain implements EntryPoint {
 	
 	private void freeze() {
 		helpButton.setEnabled(false);
-		levelList.setEnabled(false);
+		difficultyPicker.setEnabled(false);
 		leftButton.setEnabled(false);
 		rightButton.setEnabled(false);
 		upButton.setEnabled(false);
@@ -443,7 +447,7 @@ public class MazeMain implements EntryPoint {
 				maze.displaySolution(false);
 				helpButton.setEnabled(true);
 				generateButton.setEnabled(true);
-				levelList.setEnabled(true);
+				difficultyPicker.setEnabled(true);
 				update();
 			}
 		};
@@ -501,8 +505,8 @@ public class MazeMain implements EntryPoint {
 		}
 	}
 	
-	@UiHandler("levelList")
-	public void levelChange(ChangeEvent event) {
+	@UiHandler("difficultyPicker")
+	public void levelChange(ValueChangeEvent<Integer> event) {
 		clear();
 		generate(null);
 	}

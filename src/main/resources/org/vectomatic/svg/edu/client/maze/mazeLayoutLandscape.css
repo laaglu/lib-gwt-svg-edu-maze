@@ -1,0 +1,58 @@
+/* CSS positionning rules */
+.controlPanel {
+	position:absolute;
+	top:1.5em;
+	right:0px;
+	width:15%;
+	height:90%;
+	z-index:10;
+}
+.row1 {
+	position:absolute;
+	top:0%;
+	right:26%;
+	width:48%;
+	height:16%;
+}
+.row2a {
+	position:absolute;
+	top:16%;
+	right:51%;
+	width:48%;
+	height:16%;
+}
+.row2b {
+	position:absolute;
+	top:16%;
+	right:1%;
+	width:48%;
+	height:16%;
+}
+.row3 {
+	position:absolute;
+	top:32%;
+	right:26%;
+	width:48%;
+	height:16%;
+}
+.row4 {
+	position:absolute;
+	top:48%;
+	right:26%;
+	width:48%;
+	height:16%;
+}
+.row5 {
+	position:absolute;
+	top:64%;
+	right:26%;
+	width:48%;
+	height:16%;
+}
+.row6 {
+	position:absolute;
+	top:80%;
+	right:26%;
+	width:48%;
+	height:16%;
+}
